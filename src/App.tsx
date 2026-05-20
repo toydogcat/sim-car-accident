@@ -8,7 +8,8 @@ import {
   BarChart2, 
   Settings, 
   Activity, 
-  Cpu
+  Cpu,
+  X
 } from 'lucide-react';
 
 export default function App() {
@@ -42,6 +43,17 @@ export default function App() {
   // Analytics Report Card
   const [report, setReport] = useState<AnalyticsReport | null>(null);
   const [showReport, setShowReport] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  // Sync simulation resize when sidebar toggles
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (simRef.current) {
+        simRef.current.handleResize();
+      }
+    }, 310); // slightly longer than transition duration
+    return () => clearTimeout(timer);
+  }, [showSidebar]);
 
   // Specialist Tool Stats Indicators
   const [elapsed, setElapsed] = useState("00:00:00:00");
@@ -207,6 +219,13 @@ export default function App() {
           <div className="hidden lg:block">
             <span className="text-[#8e9299]">CORE:</span> <span className="text-emerald-400 font-bold">{fps} FPS</span>
           </div>
+          {/* Mobile Sidebar Toggle */}
+          <button 
+            onClick={() => setShowSidebar(!showSidebar)}
+            className="lg:hidden p-2 hover:bg-[#30363d] rounded-md transition-colors text-amber-500 cursor-pointer"
+          >
+            <Settings size={18} className={showSidebar ? 'animate-spin-slow' : ''} />
+          </button>
         </div>
       </header>
 
@@ -243,16 +262,35 @@ export default function App() {
               <BarChart2 size={13} /> View Incident Evaluation
             </button>
           )}
+
+          {/* Mobile Overlay Backdrop */}
+          {showSidebar && (
+            <div 
+              className="lg:hidden absolute inset-0 bg-black/50 z-30 transition-opacity"
+              onClick={() => setShowSidebar(false)}
+            />
+          )}
         </div>
 
         {/* Right side: Parameter Pane Sidebar */}
-        <aside className="w-80 bg-[#1a1d23] border-l border-[#30363d] flex flex-col overflow-hidden shrink-0 select-none z-10">
+        <aside className={`
+          fixed lg:static top-14 right-0 bottom-8 lg:bottom-0 w-72 lg:w-80 
+          bg-[#1a1d23] border-l border-[#30363d] flex flex-col overflow-hidden 
+          shrink-0 select-none z-40 transition-transform duration-300 ease-in-out
+          ${showSidebar ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
+        `}>
           <div className="p-4 border-b border-[#30363d] flex items-center justify-between bg-[#15181e]">
             <div className="flex items-center gap-2">
               <Settings size={13} className="text-amber-500 animate-spin-slow" />
               <span className="text-xs font-bold font-mono text-white tracking-wider uppercase">模擬參數變數</span>
             </div>
-            <span className="text-[9px] bg-[#30363d] text-slate-400 px-1.5 py-0.5 rounded font-mono">HIL ENGINE</span>
+            <button 
+              onClick={() => setShowSidebar(false)}
+              className="lg:hidden text-[#8e9299] hover:text-white"
+            >
+              <X size={16} />
+            </button>
+            <span className="hidden lg:inline text-[9px] bg-[#30363d] text-slate-400 px-1.5 py-0.5 rounded font-mono">HIL ENGINE</span>
           </div>
           
           <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">

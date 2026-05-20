@@ -208,7 +208,7 @@ export class HighwaySimulation {
     window.addEventListener('resize', this.handleResize);
   }
 
-  private handleResize = () => {
+  public handleResize = () => {
     if (!this.container || !this.renderer) return;
     this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
     this.camera.updateProjectionMatrix();
