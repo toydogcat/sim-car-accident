@@ -284,7 +284,29 @@ export default function App() {
           </span>
         </div>
         
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-4">
+          {/* Visitor Counter (vercount / busuanzi) */}
+          <span
+            id="busuanzi_container_site_pv"
+            style={{ display: 'none' }}
+            className="flex items-center gap-1 text-[9px] font-mono text-[#8e9299] border border-[#30363d] px-2 py-0.5 rounded"
+          >
+            <span className="text-[10px]">👁</span>
+            <span className="text-[#6b7280]">PV:</span>
+            <span id="busuanzi_value_site_pv" className="text-amber-400 font-bold" />
+          </span>
+          <span
+            id="busuanzi_container_site_uv"
+            style={{ display: 'none' }}
+            className="flex items-center gap-1 text-[9px] font-mono text-[#8e9299] border border-[#30363d] px-2 py-0.5 rounded"
+          >
+            <span className="text-[10px]">👤</span>
+            <span className="text-[#6b7280]">UV:</span>
+            <span id="busuanzi_value_site_uv" className="text-emerald-400 font-bold" />
+          </span>
+
+          <span className="border-r border-[#30363d] h-3" />
+
           <span className={`w-1.5 h-1.5 rounded-full ${stats.incidentActive ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`} />
           <span className="uppercase text-[9px] tracking-wider text-slate-400 font-bold">
             {stats.incidentActive ? '⚠ Incident Warning State Broadcasted' : '● Grid Normal Operations'}
