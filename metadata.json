@@ -1,0 +1,6 @@
+{
+  "name": "3D 國道連環車禍與警示系統模擬器",
+  "description": "基於 Three.js 與智慧跟車人因演算法的 3D 國道連環車禍與 VMS 電子看板警示系統模擬器。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
